@@ -1,0 +1,6 @@
+h1 {
+    transition:color 0.4s;
+    &:hover {
+        color:rgb(2, 146, 146);
+    }
+}
