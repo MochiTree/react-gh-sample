@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import axios from 'axios'
-
+import { Modal } from 'bootstrap'
 
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
@@ -9,23 +9,35 @@ import './App.css'
 function App() {
   
   const [count, setCount] = useState(0)
+  const modalRef=useRef(null)
+  const customModal=useRef(null)
 
   useEffect(()=>{
     (async()=>{
       const res= await axios.get('https://randomuser.me/api/')
       console.log(res);
+
+      setTimeout(()=>{
+        customModal.current.hide()
+      },2000);
     })()
   }, [])
+
+useEffect(()=>{
+    // console.log(modalRef.current)
+    customModal.current=new Modal(modalRef.current);
+    customModal.current.show()
+  },[])
 
   return (
     <>
 
-<button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+<button type="button" className="btn btn-primary">
   Launch demo modal
 </button>
 
 
-<div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div className="modal fade" ref={modalRef} tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div className="modal-dialog">
     <div className="modal-content">
       <div className="modal-header">
